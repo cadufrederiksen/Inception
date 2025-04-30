@@ -6,7 +6,7 @@
 #    By: carmarqu <carmarqu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:40:03 by carmarqu          #+#    #+#              #
-#    Updated: 2025/04/29 16:11:39 by carmarqu         ###   ########.fr        #
+#    Updated: 2025/04/30 12:23:01 by carmarqu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,4 @@ fclean: down
 	-$(DOCKER) image rm $(shell $(DOCKER) image ls -q $(DOCKER_COMPOSE) | grep inception) || true 	
 	
 
-re: fclean up 	
-
-		
+re: fclean
