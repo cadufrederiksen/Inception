@@ -1,28 +1,25 @@
 #!/bin/bash
+set -e
 
-if [ ! -d "var/lib/mysql/$SQL_DATABASE" ]; then
-	echo "Initializing database..."
+echo ">> Preparando MariaDB..."
 
-	mysqld_safe --skip-networking &
-    sleep 5
+# Garante diretório de runtime e permissões
+# mkdir -p /run/mysqld
+# chown -R mysql:mysql /run/mysqld
+# chown -R mysql:mysql /var/lib/mysql
 
-	while ! mysqladmin ping --silent; do
-        echo "Waiting for MariaDB to be ready..."
-        sleep 1
-    done
 
-	mysql -e "CREATE DATABASE IF NOT EXISTS \`$SQL_DATABASE\`;"
-	mysql -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD';"
-	mysql -e "GRANT ALL PRIVILEGES ON \`$SQL_DATABASE\`.* TO '$SQL_USER'@'%';"
-	mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$SQL_ROOT_PASSWORD';"
-	mysql -uroot -p"$SQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES"
+# Cria script SQL com comandos de inicialização
+cat << EOF > /tmp/init.sql
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`;
+CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_USER_PASSWORD';
+GRANT ALL PRIVILEGES ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'%';
+FLUSH PRIVILEGES;
+EOF
 
-	echo "Database initialized successfully" 
-else
-	echo "Database already initialized"
-fi
+# Garante permissões do arquivo e inicia o MariaDB com init-file
+chown mysql:mysql /tmp/init.sql
 
-killall mysqld_safe
-sleep 2
-
-exec mysqld
+echo ">> Iniciando MariaDB com arquivo de inicialização..."
+exec mysqld --user=mysql --init-file=/tmp/init.sql
