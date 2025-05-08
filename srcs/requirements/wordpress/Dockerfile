@@ -4,12 +4,13 @@ RUN apt-get update && apt-get upgrade -y && \
 	apt-get install -y php7.3 php-fpm \
 	php-mysql wget
 
-RUN mkdir -p /run/php
+RUN mkdir -p /run/php /var/www && ls -la /run && ls -la /var
 
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www && \
-	cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
-
+RUN wget https://wordpress.org/latest.tar.gz -P /tmp && \
+    tar -xzf /tmp/latest.tar.gz -C /var/www && \
+    rm /tmp/latest.tar.gz
 RUN chown -R www-data:www-data /var/www/wordpress
+RUN chmod -R 755 /var/www/wordpress
 
 RUN wget --header="User-Agent: Mozilla/5.0" https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp

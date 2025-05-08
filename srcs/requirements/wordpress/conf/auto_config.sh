@@ -1,5 +1,5 @@
 #!/bin/bash
-sleep 10
+sleep 20
 
 if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
@@ -12,9 +12,9 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
 	wp user create "$WP_ADMIN_USER" "$WP_ADMIN_EMAIL" \
 		--role=administrator \
-		--user_pass="$WP_ADMIN_PASS" --allow-root
+		--user_pass="$WP_ADMIN_PASSWORD" --allow-root
 
-	wp user create "$WP_USER" "$WP_EMAIL" \
+	wp user create "$WP_USER" "$WP_USER_EMAIL" \
 		--role=subscriber \
-		--user_pass="$WP_PASS" --allow-root
+		--user_pass="$WP_USER_PASSWORD" --allow-root
 fi
