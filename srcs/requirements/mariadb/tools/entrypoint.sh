@@ -19,7 +19,7 @@ FLUSH PRIVILEGES;
 EOF
 
 # Garante permissões do arquivo e inicia o MariaDB com init-file
-chown mysql:mysql /tmp/init.sql
+chown -R mysql:mysql /tmp/init.sql
 
 echo ">> Iniciando MariaDB com arquivo de inicialização..."
 exec mysqld --user=mysql --init-file=/tmp/init.sql

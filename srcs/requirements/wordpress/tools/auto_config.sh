@@ -1,8 +1,12 @@
 #!/bin/bash
 sleep 20
 
+echo "HOla antes de crear"
+
 if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
+echo "Creating wp-config.php file..."
+echo "$MYSQL_DATABASE"
 	wp config create --allow-root \
 		--dbname="$MYSQL_DATABASE" \
 		--dbuser="$MYSQL_USER" \
@@ -18,3 +22,6 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 		--role=subscriber \
 		--user_pass="$WP_USER_PASSWORD" --allow-root
 fi
+
+exec php-fpm7.3 -F
+echo "Wp created"
