@@ -1,18 +1,23 @@
 #!/bin/bash
-sleep 20
 
-echo "HOla antes de crear"
+echo "Waiting for the database to be ready..."
+until mysql -h mariadb -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SHOW DATABASES;" > /dev/null 2>&1; do
+    echo "Database is not ready. Retrying in 5 seconds..."
+    sleep 5
+done
+	echo "Database is ready!"
+
 
 if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
 echo "Creating wp-config.php file..."
 echo "$MYSQL_DATABASE"
 	wp config create --allow-root \
+		--dbhost="mariadb:3306" \
 		--dbname="$MYSQL_DATABASE" \
 		--dbuser="$MYSQL_USER" \
 		--dbpass="$MYSQL_PASSWORD" \
-		--dbhost="mariadb:3306" \
-		--path='/var/www/wordpress'
+		--path="/var/www/wordpress"
 
 	wp user create "$WP_ADMIN_USER" "$WP_ADMIN_EMAIL" \
 		--role=administrator \

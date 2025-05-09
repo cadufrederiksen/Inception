@@ -2,9 +2,9 @@ FROM debian:buster
 
 RUN apt-get update && apt-get upgrade -y && \
 	apt-get install -y php7.3 php-fpm \
-	php-mysql wget
+	php-mysql wget default-mysql-client
 
-RUN mkdir -p /run/php /var/www && ls -la /run && ls -la /var
+RUN mkdir -p /run/php /var/www
 
 RUN wget https://wordpress.org/latest.tar.gz -P /tmp && \
     tar -xzf /tmp/latest.tar.gz -C /var/www && \
