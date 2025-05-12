@@ -18,7 +18,7 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
     echo "Installing WordPress..."
     wp core install --allow-root \
-        --url="https://carmarqu.42.fr.com" \
+        --url="https://carmarqu.42.fr" \
         --title="Inception" \
         --admin_user="$WP_ADMIN_USER" \
         --admin_password="$WP_ADMIN_PASSWORD" \
