@@ -6,7 +6,7 @@
 #    By: debian <debian@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 10:40:03 by carmarqu          #+#    #+#              #
-#    Updated: 2025/05/13 04:41:00 by debian           ###   ########.fr        #
+#    Updated: 2025/05/13 05:44:49 by debian           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,7 @@ clean:
 	docker system prune -af
 	
 fclean: down clean
-	-$(DOCKER) volume rm $(shell $(DOCKER) volume ls -q)
-	-$(DOCKER) --rmi all
+	docker volume prune -f
 	
 re: fclean all
 
