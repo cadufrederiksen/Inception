@@ -14,35 +14,31 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
         --dbname="$MYSQL_DATABASE" \
         --dbuser="$MYSQL_USER" \
         --dbpass="$MYSQL_PASSWORD" \
-        --path="/var/www/wordpress"
+        --path="$WP_PATH"
 
     echo "Installing WordPress..."
     wp core install --allow-root \
-        --url="https://carmarqu.42.fr" \
-        --title="Inception" \
+        --url="$HOST_NAME" \
+        --title="$TITLE" \
         --admin_user="$WP_ADMIN_USER" \
         --admin_password="$WP_ADMIN_PASSWORD" \
         --admin_email="$WP_ADMIN_EMAIL" \
-        --path="/var/www/wordpress"
+        --path="$WP_PATH"
 
     echo "Creating WordPress subscriber user..."
     wp user create "$WP_USER" "$WP_USER_EMAIL" \
         --role=subscriber \
         --user_pass="$WP_USER_PASSWORD" --allow-root \
-        --path="/var/www/wordpress"
+        --path="$WP_PATH"
 
-    wp theme install twentytwentytwo --activate --path="/var/www/wordpress" --allow-root
-
-    curl -o "/var/www/wordpress/wp-content/uploads/inception-top.jpg" https://cdn.pixabay.com/photo/2015/12/09/18/47/spinning-top-1081143_1280.jpg
-
-    ATTACH_ID=$(wp media import "/var/www/wordpress/wp-content/uploads/inception-top.jpg" --title="Totem Inception" --path="/var/www/wordpress" --allow-root --porcelain)
+    wp theme install twentytwentytwo --activate --path="$WP_PATH" --allow-root
 
     wp post create \
-        --post_title="O Totem de Inception" \
-        --post_content="Essa imagem representa o pião usado como totem no filme *Inception*. ![Totem](https://carmarqu.42.fr/wp-content/uploads/inception-top.jpg)" \
+        --post_title="Inception project" \
+        --post_content="This is the Inception project from 42, nade by carmarqu" \
         --post_status=publish \
-        --path="/var/www/wordpress" \
+        --path="$WP_PATH" \
         --allow-root
 fi
 
-exec php-fpm7.3 -F
+exec php-fpm7.4 -F

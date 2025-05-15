@@ -1,8 +1,8 @@
-FROM debian:buster
+FROM debian:bullseye
 
 RUN apt-get update && apt-get upgrade -y && \
-	apt-get install -y php7.3 php-fpm \
-	php-mysql wget default-mysql-client
+	apt-get install -y php7.4 php7.4-fpm \
+	php7.4-mysql wget default-mysql-client
 
 RUN mkdir -p /run/php /var/www
 
@@ -16,7 +16,7 @@ RUN chmod -R 755 /var/www/wordpress
 RUN wget --header="User-Agent: Mozilla/5.0" https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp
 
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY tools/auto_config.sh /auto_config.sh
 
 RUN chmod +x /auto_config.sh
