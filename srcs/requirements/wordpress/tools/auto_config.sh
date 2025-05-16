@@ -35,7 +35,7 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 
     wp post create \
         --post_title="Inception project" \
-        --post_content="This is the Inception project from 42, nade by carmarqu" \
+        --post_content="This is the Inception project from 42, made by carmarqu" \
         --post_status=publish \
         --path="$WP_PATH" \
         --allow-root
