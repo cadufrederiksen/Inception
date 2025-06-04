@@ -38,8 +38,6 @@ This project provides hands-on experience with modern DevOps tools and practices
 - **MariaDB**: relational database server.
 - **WordPress**: content management system served by NGINX.
 - **FTP**: optional file transfer access with user authentication.
-- **Redis** *(bonus)*: object caching support.
-- **Adminer** *(bonus)*: database administration UI.
 
 ### 🧩 Infrastructure Features
 - Containers run as non-root users.  
